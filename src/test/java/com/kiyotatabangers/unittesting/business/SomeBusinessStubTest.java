@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+// このやり方だとメソッドが増えるとすべてのstubに追加しなければならない
 class SomeDataServiceStub implements SomeDataService {
 
     @Override
@@ -12,8 +13,23 @@ class SomeDataServiceStub implements SomeDataService {
     }
 }
 
-public class SomeBusinessStubTest {
+class SomeDataServiceEmptyStub implements SomeDataService {
 
+    @Override
+    public int[] retrieveAllData() {
+        return new int[]{};
+    }
+}
+
+class SomeDataServiceOneElementStub implements SomeDataService {
+
+    @Override
+    public int[] retrieveAllData() {
+        return new int[]{5};
+    }
+}
+
+public class SomeBusinessStubTest {
 
     @Test
     public void calculateSumUsingDataService_basic() {
@@ -24,4 +40,21 @@ public class SomeBusinessStubTest {
         assertEquals(expectedResult, actualResult);
     }
 
+    @Test
+    public void calculateSumUsingDataService_empty() {
+        SomeBusinessImpl business = new SomeBusinessImpl();
+        business.setSomeDataService(new SomeDataServiceEmptyStub());
+        int actualResult = business.calculateSumUsingDataService(); // new int[]{}
+        int expectedResult = 0;
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void calculateSumUsingDataService_oneValue() {
+        SomeBusinessImpl business = new SomeBusinessImpl();
+        business.setSomeDataService(new SomeDataServiceOneElementStub());
+        int actualResult = business.calculateSumUsingDataService(); // new int[]{5}
+        int expectedResult = 5;
+        assertEquals(expectedResult, actualResult);
+    }
 }
