@@ -1,6 +1,7 @@
 package com.kiyotatabangers.unittesting.business;
 
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 import java.util.List;
 
@@ -57,5 +58,17 @@ public class ListMockTest {
         // 呼ばれないことの確認
         verify(mock, never()).get(2);
         verify(mock, never()).get(3);
+    }
+
+    @Test
+    public void argumentCapturing(){
+
+        mock.add("SomeString");
+
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+
+        verify(mock).add(captor.capture());
+
+        assertEquals("SomeString", captor.getValue());
     }
 }
