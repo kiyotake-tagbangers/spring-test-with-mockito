@@ -9,7 +9,7 @@ import static org.mockito.Mockito.*;
 
 public class ListMockTest {
 
-    List mock = mock(List.class);
+    List<String> mock = mock(List.class);
 
     @Test
     public void size_basic() {
@@ -38,5 +38,24 @@ public class ListMockTest {
         when(mock.get(anyInt())).thenReturn("Test");
         assertEquals("Test", mock.get(0));
         assertEquals("Test", mock.get(1));
+    }
+
+    @Test
+    public void verificationBasics() {
+
+        String value1 = mock.get(0);
+        String value2 = mock.get(1);
+
+        // Listの0番目があるかの確認
+        verify(mock).get(0);
+
+        // 何個、値があるかの確認
+        verify(mock, times(2)).get(anyInt());
+        verify(mock, atLeast(1)).get(anyInt());
+        verify(mock, atMost(2)).get(anyInt());
+
+        // 呼ばれないことの確認
+        verify(mock, never()).get(2);
+        verify(mock, never()).get(3);
     }
 }
