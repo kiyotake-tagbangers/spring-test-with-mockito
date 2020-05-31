@@ -3,6 +3,7 @@ package com.kiyotatabangers.unittesting.business;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -86,5 +87,20 @@ public class ListMockTest {
 
         assertEquals("SomeString1", allValues.get(0));
         assertEquals("SomeString2", allValues.get(1));
+    }
+
+    @Test
+    public void mocking(){
+        ArrayList arrayListMock = mock(ArrayList.class);
+        System.out.println(arrayListMock.get(0)); // null
+        System.out.println(arrayListMock.size()); // 0
+
+        // リアルなクラスではないためサイズは変わらない
+        arrayListMock.add("Test");
+        arrayListMock.add("Test2");
+        System.out.println(arrayListMock.size()); // 0
+        
+        when(arrayListMock.size()).thenReturn(5);
+        System.out.println(arrayListMock.size()); // 5
     }
 }
