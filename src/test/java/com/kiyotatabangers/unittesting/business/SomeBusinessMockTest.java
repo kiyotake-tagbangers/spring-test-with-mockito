@@ -2,15 +2,23 @@ package com.kiyotatabangers.unittesting.business;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class SomeBusinessMockTest {
 
-    SomeBusinessImpl business = new SomeBusinessImpl();
-    SomeDataService dataServiceMock = mock(SomeDataService.class);
+    @InjectMocks
+    SomeBusinessImpl business;
+
+    @Mock
+    SomeDataService dataServiceMock;
 
     @Before
     public void before(){
